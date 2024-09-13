@@ -1,0 +1,78 @@
+<%- include('partials/header'); -%>
+
+<%- include('partials/navbar3'); -%>
+
+<div class="flex items-center justify-center w-72">
+    
+</div>
+
+<div class="p-3 mx-5 my-24 md:mx-60 lg:mx-96  md:p-12 card shadow-2xl">
+    <div id="alert" style="display: none;" class="alert mx-auto text alert-error w-80">
+        <span>Invalid Captcha. Try again</span>
+      </div>
+    <h1 class="text-2xl font-bold text-center mt-6 mb-4">COD Verification</h1>
+
+    <!-- Total Payable Amount -->
+    <div class="mb-6 text-center">
+        <p class="text-lg font-semibold">Total Payable Amount: ₹5,000</p>
+    </div>
+
+    <form id="myForm" class="max-w-sm mx-auto">
+        <div id="captcha" class="text-3xl unselectable text-center border border-indigo-300 font-bold mb-2"></div>
+        <div style="float: right;" onclick="refreshCaptcha()" class="badge badge-success mb-4 unselectable">
+            <svg class="w-[12px] h-[12px] text-black mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97"/>
+              </svg>
+            Refresh
+        </div>
+        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA here" required
+            class="w-full border-2 border-gray-300 focus:outline-none focus:border-indigo-500 rounded-md py-2 px-4 mb-4">
+        <br>
+        <div class="flex justify-center mb-3">
+            <button
+            class="btn btn-primary">Place COD Order</button>
+        </div>
+
+    </form>
+
+
+      
+</div>
+<script>
+    function generateCaptcha() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var length = 6;
+        var captcha = '';
+        for (var i = 0; i < length; i++) {
+            var randomIndex = Math.floor(Math.random() * chars.length);
+            captcha += chars[randomIndex];
+        }
+        document.getElementById('captcha').textContent = captcha;
+    }
+
+    function refreshCaptcha() {
+        generateCaptcha();
+        document.getElementById('captchaInput').value = '';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        generateCaptcha();
+    });
+
+    document.getElementById('myForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var userInput = document.getElementById('captchaInput').value;
+        var generatedCaptcha = document.getElementById('captcha').textContent;
+
+        if (userInput === generatedCaptcha) {
+            document.getElementById("alert").style.display="none"
+            document.getElementById('myForm').submit();
+        } else {
+            document.getElementById("alert").style.display="block"
+            generateCaptcha();
+            document.getElementById('captchaInput').value = '';
+        }
+    });
+</script>
+
+<%- include('partials/footer'); -%>

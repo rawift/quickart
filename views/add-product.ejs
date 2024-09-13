@@ -1,0 +1,114 @@
+<%- include('partials/header'); -%>
+
+    <%- include('partials/navbar2'); -%>
+
+        <div class="p-3 mx-5 mb-24 md:p-12">
+            <form action='/add-product' method='post' class="max-w-md mx-auto">
+
+                <h1 class="text-2xl font-bold mb-4">Add Product to Inventory</h1>
+
+                <div class="form-control">
+                    <div>
+                        <label class="label">Product Name</label>
+                        <input name="name" type="text" placeholder="Example: Sony TV" class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Product Description</label>
+                        <input name="description" type="text" maxlength="75" placeholder="Example: OLED 4K TV"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Is FPA?</label>
+                        <select name="fpa" class="select select-bordered w-full">
+                            <option selected disabled value="">Select an option</option>
+                            <option value=true>Yes</option>
+                            <option value=false>No</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label">Price</label>
+                        <input name="price" type="number" min="0" max="1000000" placeholder="Example: &#8377;89000"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Category</label>
+                        <select name="category" class="select select-bordered w-full">
+                            <option selected disabled value="">Select an option</option>
+                            <option value="Mobiles">Mobiles</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Groceries">Groceries</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label">Brand</label>
+                        <input name="brand" type="text" placeholder="Example: Sony" class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Model</label>
+                        <input name="model" type="text" maxlength="50" placeholder="Example: Bravia OLED"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Color</label>
+                        <input name="color" type="text" maxlength="30" placeholder="Example: Black"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Product Image URL</label>
+                        <input name="imageUrl" type="text" placeholder="Example: Image URL" class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Stock Quantity</label>
+                        <input name="qty" type="number" min="0" placeholder="Example: 150" class="input input-bordered w-full" />
+                    </div>
+                    <div>
+                        <label class="label">Detailed Description</label>
+                        <textarea name="detailedDescription" class="textarea textarea-bordered w-full"
+                            placeholder="Detailed Description"></textarea>
+                        <label class="label">
+                            <span class="label-text-alt text-red-500">Important! Use ' , ' commas for bulletin
+                                points.</span>
+                        </label>
+                    </div>
+                    <div id="utf" class="hidden mb-3">
+                        <div>
+                            <label class="label">RAM</label>
+                            <input type="text" name="utf1" placeholder="Example: 8GB" class="input input-bordered w-full" />
+                        </div>
+                        <div>
+                            <label class="label">Storage</label>
+                            <input type="text" name="utf2" placeholder="Example: 512GB" class="input input-bordered w-full" />
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                              <span class="label-text">Add additional fields for Electronics.</span> 
+                              <input id="utfCheckbox" onchange="showUTFs()" type="checkbox" class="checkbox" />                    </div>
+                            </label>
+                          </div>
+                    
+                </div>
+                <button class="mt-6 btn btn-success w-full">Add Product</button>
+
+            </form>
+
+        </div>
+
+        <script>
+            function showUTFs() {
+                const utfContainer = document.getElementById("utf");
+                const checkbox = document.getElementById("utfCheckbox");
+
+                if (checkbox.checked) {
+                    utfContainer.classList.remove("hidden");
+                } else {
+                    utfContainer.classList.add("hidden");
+                }
+            }
+
+        </script>
+
+        <%- include('partials/footer'); -%>

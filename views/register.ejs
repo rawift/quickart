@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="rgb(79 70 229)" />
+  <title>QuicKart - Login</title>
+  <link rel="shortcut icon" href="../assets/images/logo.svg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">    
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+  body{
+    font-family: 'Outfit', sans-serif;
+
+  }
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+</style>
+
+<body class="bg-gray-50 mt-2">
+
+  <section class=" mt-12 md:mt-1">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-black">
+        <img class="w-8 h-8 mr-2" src="../assets/images/logo.svg" alt="logo">
+        QuicKart
+      </a>
+      <div style="display: none;" id="uaxAlertDiv"
+        class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+        <div>
+          <span class="font-medium">
+            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>User already exists!</span> An account with this email already exists.
+        </div>
+      </div>
+
+
+      
+      <div class="mt-5 max-w-md w-full bg-white border border-gray-200 rounded-xl shadow-sm null:bg-neutral-900 null:border-neutral-700">
+        <div class="p-4 sm:p-7">
+          <div class="text-center">
+            <h1 class="block text-2xl font-bold text-gray-800 null:text-white">Login</h1>
+            <p class="mt-2 text-sm text-gray-600 null:text-neutral-400">
+              Already have a account?
+              <a  class="text-indigo-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium null:text-blue-500" href="/auth/login">
+                Login
+              </a>
+            </p>
+          </div>
+      
+          <div class="mt-5">
+            <a href="/auth/google">
+              <button type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-900 null:border-neutral-700 null:text-white null:hover:bg-neutral-800 null:focus:bg-neutral-800">
+                <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
+                  <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4"/>
+                  <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853"/>
+                  <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05"/>
+                  <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335"/>
+                </svg>
+                Continue with Google
+              </button>
+            </a>
+      
+            <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 null:text-neutral-500 null:before:border-neutral-600 null:after:border-neutral-600">Or</div>
+      
+            <!-- Form -->
+            <form id="loginForm" action="/auth/register" method="POST">
+              <div class="grid gap-y-4">
+                <!-- Form Group -->
+                <div>
+                  <label for="name" class="block text-sm mb-2 null:text-white">Full Name</label>
+                  <div class="relative">
+                    <input type="text" placeholder="John Doe" name="name" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400 null:placeholder-neutral-500 null:focus:ring-neutral-600" required aria-describedby="email-error">
+                    <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                      <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+      
+                <!-- Form Group -->
+                <div>
+                  <label for="email" class="block text-sm mb-2 null:text-white">Email address</label>
+                  <div class="relative">
+                    <input type="email" placeholder="johndoe@abc.com" id="email" name="username" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400 null:placeholder-neutral-500 null:focus:ring-neutral-600" required aria-describedby="email-error">
+                    <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                      <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+
+                <!-- Form Group -->
+                <div class="mb-4">
+                  <div class="flex justify-between items-center">
+                    <label for="password" class="block text-sm mb-2 null:text-white">Set Password</label>
+                  </div>
+                  <div class="relative">
+                    <input type="password" placeholder="●●●●●●" id="password" name="password" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400 null:placeholder-neutral-500 null:focus:ring-neutral-600" required aria-describedby="password-error">
+                    <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                      <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+      
+      
+                <button type="submit" class="w-full py-3 px-4 mb-5 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign up</button>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const uax = urlParams.get('uax');
+
+        if (uax === 'true') {
+            showUaxAlert();
+        }
+    });
+
+    function showUaxAlert() {
+        const alertDiv = document.getElementById('uaxAlertDiv');
+        alertDiv.style.display = 'block';
+
+        setTimeout(() => {
+            // Add a class to initiate a smooth fade-out animation
+            alertDiv.classList.add('fade-out');
+
+            // Hide the alert after the animation completes
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+                // Remove the fade-out class for future displays
+                alertDiv.classList.remove('fade-out');
+            }, 500); // Adjust this time based on your CSS animation duration
+        }, 4000); // Display the alert for 3 seconds
+    }
+
+</script>
+</body>
+
+</html>

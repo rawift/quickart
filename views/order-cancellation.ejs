@@ -1,0 +1,169 @@
+<%- include('partials/header'); -%>
+
+
+<%- include('partials/navbar2'); -%>
+
+
+
+
+<style>
+    input[type='checkbox']:checked {
+        background-image: url(https://pagedone.io/asset/uploads/1689406942.svg);
+    }
+    select {
+        text-indent: 1px;
+        text-overflow: '';
+        width: 50px;
+        height: 50px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent url(https://pagedone.io/asset/uploads/1716542745.png) no-repeat 97% center;
+    }
+</style> 
+<section class="py-8 pb-24 relative">
+    <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
+        <div class="w-full flex-col justify-start items-end lg:gap-16 gap-12 inline-flex">
+            <div class="w-full flex-col justify-start items-center gap-14 flex">
+                <div class="w-full flex-col justify-start items-start gap-3 flex">
+                    <h2 class="w-full text-center text-gray-900 text-3xl font-bold font-manrope leading-normal">Order Cancellation</h2>
+                </div>
+                <div class="w-full flex-col justify-start items-start gap-8 flex">
+                    <div class="w-full flex-col justify-start items-start gap-5 flex">
+                        <h4 class="text-black text-xl font-semibold leading-8">Order Details</h4>
+                        <div class="w-full p-8 rounded-xl border border-gray-200 flex-col justify-start items-start gap-8 flex">
+                            <div class="w-full justify-between items-center gap-4 flex sm:flex-row flex-col">
+                                <h5 class="text-gray-900 text-lg font-semibold leading-normal">Order Number:
+                                    <span class="text-gray-500 font-medium">#<%= order.orderNumber %></span>
+                                </h5>
+
+                                <% const formattedDate=((date)=> new Date(new Date(date).setDate(new Date(date).getDate() +
+                                0)).toLocaleString('en-US', {timeZone: "Asia/Kolkata", day: '2-digit', month: 'long', year: 'numeric'
+                                }).replace(/(\d+)(?=\s)/, '$1' + (['th','st','nd','rd'][((n)=>n%100>10&&n%100
+                                <20?0:[,1,2,3,0,0,0,0,0,0][n%10])(parseInt(RegExp.$1))])) )(order.orderDate); %>
+                                <h5 class="text-gray-900 text-lg font-semibold leading-normal">Order Date:
+                                    <span class="text-gray-500 font-medium"><%= formattedDate %></span>
+                                </h5>
+                            </div>
+                            <div class="w-full justify-between items-center gap-4 flex sm:flex-row flex-col pb-8 border-b border-gray-200">
+                                <h5 class="text-gray-900 text-lg font-semibold leading-normal">Refund Amount:
+                                    <span class="text-gray-500 font-medium">$<%= order.orderValue %></span>
+                                </h5>
+                                <h5 class="text-gray-900 text-lg font-semibold leading-normal">Payment Method:
+                                    <% if(order.paymentMethod === 'amazon_pay'){ %>
+                                        <span class="text-gray-500 font-medium">Amazon Pay</span>
+                                    <% } else if (order.paymentMethod === 'cod') { %>
+                                        <span class="text-gray-500 font-medium">Cash on Delivery</span>
+                                    <% } else { %>
+                                        <span class="text-gray-500 font-medium">Card</span>    
+                                    <% } %>
+                                </h5>
+                            </div>
+                            <div class="w-full flex-col justify-start items-start gap-6 flex">
+                                <% order.products.forEach(orderProduct=> { %>
+
+                                    <div class="w-full bg-white border-b border-gray-200 px-3 py-4 mb-6 mt-2">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-20 h-20">
+                                                <img onerror="this.src='https://placehold.co/400?text=Product image not available&font=pt-sans'" src="<%= orderProduct.product.imageUrl %>" alt="Product-image"
+                                                    class="object-cover" />
+                                            </div>
+                                            <div>
+                                                <h2 class="text-md md:text-xl font-bold productLinkCart">
+                                                    <%= orderProduct.product.name %>
+                                                </h2>
+                                                <p class="text-gray-700 text-xs md:text-lg mt-1">
+                                                    <%= orderProduct.product.description %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between mt-4">
+                                            <div class="flex items-center">
+                                                <label for="quantity2" class="block text-sm font-medium text-gray-700">Qty: <%=
+                                                        orderProduct.quantity %></label>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-lg md:text-3xl font-semibold">$<%= orderProduct.product.price %>.00</p>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <% }); %>
+        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex-col justify-start items-start gap-8 flex">
+                        <form method="POST" action="/process-order-cancellation" class="w-full">
+                        <h4 class="text-black text-xl font-semibold leading-8">Select Reason for Cancellation</h4>
+                        <div class="w-full justify-start items-start lg:gap-8 gap-3.5 flex sm:flex-row flex-col">
+                            <div class="w-full flex-col justify-start items-start gap-1.5 flex">
+                                <div class="justify-start items-center gap-1 inline-flex">
+                                    <h6 class="text-gray-600 text-sm font-medium leading-normal">Choose Reason</h6>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+                                        <path d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z" fill="#EF4444"/>
+                                    </svg>
+                                </div>
+                                <div class="flex w-full">
+                                    <div class="relative w-full ">
+                                        <select required class="h-12 border border-gray-300 text-gray-900 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none  font-normal leading-relaxed
+                                        shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] placeholder-gray-400">
+                                        <option selected disabled value="">Select a reason</option>
+                                        <option value="1">I have changed my mind</option>
+                                            <option value="2">I bought the wrong items</option>
+                                            <option value="3">I found a cheaper alternative</option>
+                                            <option value="4">I placed a duplicate order</option>
+                                            <option value="5">Delivery takes too long</option>
+                                            <option value="6">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full flex-col justify-start items-start gap-1.5 flex">
+                                <label class="text-gray-600 text-sm font-medium leading-normal">Feedback (optional)</label>
+                                <input type="text" class="w-full h-12 shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] focus:outline-none px-4 py-2.5 rounded-lg  border border-gray-300 justify-start items-center gap-2 inline-flex text-gray-900 placeholder-gray-400 text-base font-normal leading-relaxed" placeholder="Write here...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex-col justify-start items-start gap-8 flex">
+                        <h4 class="text-black text-xl font-semibold leading-8">Select Refund Method</h4>
+                        <div class="w-full justify-start items-start gap-8 inline-flex">
+                            <div class="w-full flex gap-3.5 md:flex-row flex-col">
+                                <ul class="grid w-full md:grid-cols-2">
+                                    <li class="ml-0">
+                                        <input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required />
+                                        <label for="hosting-small" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer null:hover:text-gray-300 null:border-gray-700 null:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 null:text-gray-400 null:bg-gray-800 null:hover:bg-gray-700">                           
+                                            <div class="block">
+                                                <div class="w-full text-lg font-semibold flex inline-flex">
+                                                    <svg class="w-5 h-5 mr-2 mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2 20H22V22H2V20ZM4 12H6V19H4V12ZM9 12H11V19H9V12ZM13 12H15V19H13V12ZM18 12H20V19H18V12ZM2 7L12 2L22 7V11H2V7ZM4 8.23607V9H20V8.23607L12 4.23607L4 8.23607ZM12 8C11.4477 8 11 7.55228 11 7C11 6.44772 11.4477 6 12 6C12.5523 6 13 6.44772 13 7C13 7.55228 12.5523 8 12 8Z"></path></svg>
+                                                    Back to source account</div>
+                                                <div class="w-full text-sm">May take 5 to 7 days to process your refund</div>
+                                            </div>
+                                            <svg class="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                            </svg>
+                                        </label>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="w-full flex justify-start">
+                <input type="hidden" name="order_no" value="<%= order.orderNumber %>">
+                <button type="submit" class="sm:w-fit w-full px-5 py-2.5 bg-red-600 hover:bg-red-800 transition-all duration-700 ease-in-out rounded-xl shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)]">
+                    <span class="text-white text-base font-semibold leading-7">Request for cancellation</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</section>
+                                        
+    
+
+
+<%- include('partials/footer'); -%>

@@ -1,0 +1,164 @@
+<%- include('partials/header'); -%>
+
+    <%- include('partials/navbar2'); -%>
+        <div class="mb-24">
+
+
+            <div class="p-4 md:p-12 md:mx-12">
+
+                <h1 class="text-2xl font-bold mb-4">Saved Addresses</h1>
+
+                <!-- Address List -->
+                <div class="space-y-4">
+                    <% if(address.length===0) { %>
+                        <h2 class="my-3 text-xl">No saved address found!</h2>
+                        <% } else { %>
+                            <form id="addressForm" action="/payment-method" method="post">
+                                <% address.forEach((add)=> { %>
+                                    <div class="border rounded-2xl p-4 shadow-md mb-4">
+                                        <div style="float: right;" class="badge badge-success gap-2">
+                                            <svg class="w-[14px] h-[14px] text-black" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="1.2"
+                                                    d="M15.5 10.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Zm0 0a2.225 2.225 0 0 0-1.666.75H12m3.5-.75a2.225 2.225 0 0 1 1.666.75H19V7m-7 4V3h5l2 4m-7 4H6.166a2.225 2.225 0 0 0-1.666-.75M12 11V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v9h1.834a2.225 2.225 0 0 1 1.666-.75M19 7h-6m-8.5 3.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
+                                            </svg>
+                                            Express Delivery
+                                        </div>
+                                        <p class="text-lg font-semibold">
+                                            <%= add.name %>
+                                        </p>
+                                        <p>
+                                            <%= add.streetAddress %>
+                                        </p>
+                                        <p>
+                                            <%= add.city %>, <%= add.zip %>
+                                        </p>
+                                        <p>Phone : <%= add.phone %>
+                                        </p>
+
+
+                                        <button type="button"
+                                            class="btn btn-sm rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 mt-2">
+                                            <input type="radio" required="" name="addressID" value="<%= add._id %>"
+                                                class="radio radio-xs radio-info" />
+                                            Select</button>
+                                    </div>
+                                    <% }) %>
+                            </form>
+                            <% } %>
+                </div>
+
+                <!-- Add New Address Section -->
+                <% if(address.length===0) { %>
+                    <% } else { %>
+                        <div class="m-5 font-semibold text-2xl">
+                            OR
+                        </div>
+                        <% } %>
+
+                            <div class="mt-6">
+                                <button class="btn btn-sm text-white rounded-2xl bg-black hover:bg-gray-900"
+                                    onclick="toggleNewAddress()">Add New Address</button>
+                                <div id="new-address" class="mt-4" style="display: none;">
+                                    <div class="card border border-gray-200 rounded-2xl shadow-2xl p-8">
+                                        <h2 class="text-lg font-bold mb-2">Add New Address</h2>
+
+                                        <form action="/add-address?r_url=" method="POST">
+                                            <div class="mb-4">
+                                                <label for="name" class="block text-sm font-medium text-gray-700">Full
+                                                    Name</label>
+                                                <input type="text" required name="name"
+                                                    class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="address"
+                                                    class="block text-sm font-medium text-gray-700">Street
+                                                    Address</label>
+                                                <input type="text" required name="streetAddress"
+                                                    class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone
+                                                    Number</label>
+                                                <input type="tel" required name="phone"
+                                                    class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label for="city"
+                                                        class="block text-sm font-medium text-gray-700">City</label>
+                                                    <input type="text" required name="city"
+                                                        class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                                </div>
+                                                <div>
+                                                    <label for="zip" class="block text-sm font-medium text-gray-700">Zip
+                                                        Code</label>
+                                                    <input type="zip" required name="zip"
+                                                        class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-sm btn-success mt-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-house-check-fill"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                                                    <path
+                                                        d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                                                    <path
+                                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z" />
+                                                </svg>
+                                                Save Address</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Proceed to Payment Option Button -->
+                            <div class="mt-12 flex justify-center">
+
+                                <button onclick="submitForm()"
+                                    class="text-center w-full md:max-w-sm px-5 py-2 rounded-[100px] bg-indigo-600 flex items-center justify-center text-md text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                    <svg class="w-[16px] h-[16px] text-white mr-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                        <path
+                                            d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z" />
+                                    </svg>
+                                    Proceed to Checkout
+                                </button>
+                            </div>
+
+            </div>
+        </div>
+
+
+
+        <script>
+            function toggleNewAddress() {
+                var x = document.getElementById("new-address");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            function submitForm() {
+                // Get the selected radio button
+                const selectedRadio = document.querySelector('input[name="addressID"]:checked');
+
+                // Check if a radio button is selected
+                if (!selectedRadio) {
+                    alert('Please choose a delivery option before submitting.');
+                } else {
+                    // Submit the form if a radio button is selected
+                    document.getElementById('addressForm').submit();
+                }
+            }
+
+        </script>
+
+        <%- include('partials/footer'); -%>

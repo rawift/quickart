@@ -1,0 +1,51 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: "Outfit", sans-serif;
+}
+
+.fontDM{
+    font-family: "Outfit", sans-serif;
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+.h1010{
+    height: 2rem !important;
+}
+
+.hidden{
+    display: none;
+}
+
+.productLinkCart:hover{
+    text-decoration: underline 2px;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+ul li {
+    /*
+     * We want the bullets outside of the list,
+     * so the text is aligned. Now the actual bullet
+     * is outside of the list’s container
+     */
+    list-style-position: outside;
+
+    /*
+     * Because the bullet is outside of the list’s
+     * container, indent the list entirely
+     */
+    margin-left: 1em;
+}

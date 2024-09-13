@@ -1,0 +1,106 @@
+<div style="border-bottom: 0.1px solid rgb(196, 196, 196);" class="navbar md:px-16 bg-base-100">
+  <div class="flex-1 mt-2">
+      <a href="/" class="btn btn-ghost hover:bg-transparent normal-case text-xl">
+        <svg class="h-6 w-6" viewBox="0 0 256 229" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
+            <title>PaLM</title>
+            <g>
+                <path d="M128,228.5418 L128,228.5418 C137.895187,228.5418 145.909841,220.527146 145.909841,210.631959 L145.909841,55.4133387 L110.090159,55.4133387 L110.090159,210.631959 C110.090159,220.527146 118.104813,228.5418 128,228.5418 Z" fill="#F9AB00"></path>
+                <path d="M199.355791,112.05321 C180.043012,92.7553568 151.193244,88.8450415 128,100.30734 L204.669044,176.976383 C207.833115,180.140455 213.280692,178.886766 214.62393,174.633179 C221.36997,153.275694 216.28059,128.992935 199.355791,112.05321 Z" fill="#5BB974"></path>
+                <path d="M56.6442092,112.05321 C75.9569876,92.7553568 104.806756,88.8450415 128,100.30734 L51.3309565,176.976383 C48.1668846,180.140455 42.719308,178.886766 41.37607,174.633179 C34.6300299,153.275694 39.7194097,128.992935 56.6442092,112.05321 Z" fill="#129EAF"></path>
+                <path d="M193.669416,52.5477642 C163.162987,52.5477642 137.268343,72.5470864 128,100.30734 L249.249622,100.30734 C254.219603,100.30734 257.532924,95.0537863 255.279269,90.6211007 C243.757271,68.0099267 220.504328,52.5477642 193.669416,52.5477642 Z" fill="#AF5CF7"></path>
+                <path d="M140.671212,20.1011026 C119.089854,41.6824607 114.925816,74.1141975 128,100.30734 L213.743363,14.5639768 C217.265632,11.0417081 215.892544,4.98221194 211.161361,3.44495061 C187.012925,-4.39060475 159.640719,1.13159617 140.671212,20.1011026 Z" fill="#FF8BCB"></path>
+                <path d="M115.328788,20.1011026 C136.910146,41.6824607 141.074184,74.1141975 128,100.30734 L42.2566371,14.5639768 C38.7343684,11.0417081 40.1074562,4.98221194 44.8386392,3.44495061 C68.9870745,-4.39060475 96.3592812,1.13159617 115.328788,20.1011026 Z" fill="#FA7B17"></path>
+                <path d="M62.3305837,52.5477642 C92.8370125,52.5477642 118.731657,72.5470864 128,100.30734 L6.75037772,100.30734 C1.7803969,100.30734 -1.53292365,95.0537863 0.720731316,90.6211007 C12.2427289,68.0099267 35.4956722,52.5477642 62.3305837,52.5477642 Z" fill="#4285F4"></path>
+            </g>
+        </svg>
+          QuicKart</a>
+  </div>
+
+
+  <div class="flex-none">
+
+      <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle">
+              <div class="indicator">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  <span class="badge badge-sm indicator-item"><%= NoOfitems %></span>
+              </div>
+          </label>
+          <div tabindex="0" class="mt-3 z-30 card card-compact dropdown-content w-52 bg-base-100 shadow">
+              <div class="card-body">
+                  <% if(NoOfitems == 1){ %>
+                      <span class="font-semibold text-lg"><%= NoOfitems %> Item</span>
+                  <% } else if (NoOfitems > 1) { %>
+                    <span class="font-semibold text-lg"><%= NoOfitems %> Items</span>
+                  <% } else{  %>
+                      <span class="font-semibold text-lg">Cart is Empty :)</span>
+                  <% } %>
+                  <span class="text-sm">Subtotal: $<%= cartValue.toLocaleString('en-US') %></span>
+                  <div class="card-actions">
+                      <a href="/cart">
+                          <button
+                                            class="text-center w-full px-5 py-2 rounded-[100px] bg-indigo-600 flex items-center justify-center text-md text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+  
+                                            <svg class="w-[14px] h-[14px] text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.00488 16V4H2.00488V2H5.00488C5.55717 2 6.00488 2.44772 6.00488 3V15H18.4433L20.4433 7H8.00488V5H21.7241C22.2764 5 22.7241 5.44772 22.7241 6C22.7241 6.08176 22.7141 6.16322 22.6942 6.24254L20.1942 16.2425C20.083 16.6877 19.683 17 19.2241 17H5.00488C4.4526 17 4.00488 16.5523 4.00488 16ZM6.00488 23C4.90031 23 4.00488 22.1046 4.00488 21C4.00488 19.8954 4.90031 19 6.00488 19C7.10945 19 8.00488 19.8954 8.00488 21C8.00488 22.1046 7.10945 23 6.00488 23ZM18.0049 23C16.9003 23 16.0049 22.1046 16.0049 21C16.0049 19.8954 16.9003 19 18.0049 19C19.1095 19 20.0049 19.8954 20.0049 21C20.0049 22.1046 19.1095 23 18.0049 23Z"></path></svg>
+                                            View Cart
+                                        </button>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <% if(user != null){ %>
+          <div class="dropdown z-30 ml-2 dropdown-end">
+              <div>
+                <button type='button' class='py-1.5 flex px-4 text-sm bg-white border border-indigo-300  text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-50 hover:text-indigo-700'>
+                    <svg class="w-[18px] h-[18px] text-indigo-600 mr-2"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                      </svg>
+                    <%=  user.name.split(" ")[0]; %> </button>
+                </button>
+
+                          
+              </div>
+              <ul tabindex="0"
+                  class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                  <li><a href="/account/orders">My Orders</a></li>
+                  <li><a href="/account/manage-addresses">My Addresses</a></li>
+                  <li><a href="/account/profile">My Profile</a></li>
+                  <li>
+                      <a href="/quickart-elite" class="justify-between">
+                          QuicKart Elite
+                          <span class="badge badge-success badge-sm">New</span>
+                      </a>
+                  </li>
+  
+                  <li><a href="/logout">Logout
+                          <svg class="w-[15px] h-[15px] text-black" aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 15">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="1.2"
+                                  d="M1 7.5h11m0 0L8 3.786M12 7.5l-4 3.714M12 1h3c.53 0 1.04.196 1.414.544.375.348.586.82.586 1.313v9.286c0 .492-.21.965-.586 1.313A2.081 2.081 0 0 1 15 14h-3" />
+                          </svg>
+                      </a></li>
+              </ul>
+          </div>
+      <% } else { %>
+          <div class="dropdown ml-2 z-30 dropdown-end">
+              <div>
+                  <a href="/auth/login">
+                    <button type='button' class='py-1.5 flex px-4 text-sm bg-white border border-indigo-300  text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-50 hover:text-indigo-700'>
+                        <svg class="w-[18px] h-[18px] text-black mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                          </svg>
+                        Login
+                    </button>
+                  </a>
+              </div>
+          </div>
+      <% } %>
+      
+  </div>
+</div>

@@ -1,0 +1,155 @@
+<%- include('partials/header'); -%>
+
+  <%- include('partials/navbar2'); -%>
+
+    <div class="md:p-3 mx-3 md:mx-4 mt-5 mb-24 md:p-12">
+
+
+      <section
+        class=" relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
+        <div class="w-full max-w-7xl px-4 border-2 border-gray-200  rounded-xl md:px-5 lg-6 mx-auto relative z-10">
+          <div class="grid grid-cols-12">
+            <div class="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
+              <div class="flex items-center justify-between pb-8 border-b border-gray-300">
+                <h2 class="font-manrope font-bold text-2xl md:text-3xl leading-10 text-black">Order Summary
+                </h2>
+                <% if(cart.items.length > 1){ %>
+                  <h2 class="font-manrope font-bold text-xl leading-8 text-gray-600"><%= cart.items.length %> Items</h2>
+                  <% } else { %>
+                    <h2 class="font-manrope font-bold text-xl leading-8 text-gray-600">1 Item</h2>
+                  <% } %>
+              </div>
+
+              <%  cart.items.forEach(item => { %>
+                <div class="bg-white border-2 mt-6 border-gray-200 rounded-xl px-4 py-2 mb-3">
+                  <div class="flex items-center space-x-4">
+                      <div class="w-24 h-20">
+                          <img onerror="this.src='https://placehold.co/300?text=Product image not available&font=pt-sans'" src="<%= item.product.imageUrl %>"
+                              alt="Product-image" class="object-cover" />
+                      </div>
+                      <div>
+                          <h2 class="text-md md:text-lg font-bold productLinkCart"><%= item.product.name %></h2>
+                          <p class="text-gray-700 text-xs mt-1"><%= item.product.description %></p>
+                      </div>
+                  </div>
+                  <div class="flex items-center justify-between mt-4">
+                      <div class="flex items-center">
+                          <label for="quantity2" class="block text-sm font-medium ml-3 text-black">Quantity : <%= item.quantity %></label>                        
+                      </div>
+                      <div class="text-right">
+                          <p class="text-lg md:text-xl font-semibold">$<%= item.product.price %>.00</p>
+                      </div>
+                  </div>
+                  
+              </div>
+  
+                <% }); %>
+
+              
+            
+              <div class="flex items-center justify-end mt-8">
+                <a href="/">
+                  <button
+                  class="flex items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700">
+                  Add more items
+                  <svg class="transition-all duration-500 group-hover:translate-x-2" xmlns="http://www.w3.org/2000/svg"
+                    width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path
+                      d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
+                      stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" />
+                  </svg>
+                </button>
+                </a>
+              </div>
+            </div>
+            <div
+              class=" col-span-12 xl:col-span-4 bg-gray-50 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:pl-8 py-24">
+              <h2 class="font-manrope font-bold text-2xl md:text-3xl leading-10 text-black pb-8 border-b border-gray-300">
+                Payment Summary</h2>
+              <div class="mt-8">
+                <div class="flex items-center justify-between">
+                  <h2 class="font-manrope text-lg leading-8 text-gray-600">Subtotal</h2>
+
+                    <p class="font-medium text-lg leading-8 text-black">$<%= total.toLocaleString('en-US') %>.00</p>
+                </div>
+                <div class="flex items-center justify-between pb-6">
+                  <h2 class="font-manrope text-lg leading-8 text-gray-600">Shipping Fee</h2>
+                  <% if(total > 49){ %>
+                    <p class="font-medium text-lg leading-8 text-black"><span style="text-decoration: line-through;">+$9</span> <span style="color: rgb(62, 193, 62);">FREE</span></p>
+                <% } else { %>
+                  <p class="font-medium text-lg leading-8 text-black">+$9</p>
+                <% } %>
+                </div>
+                  <label class="flex  items-center mb-1 text-black text-md font-bold">Shipping to
+                  </label>
+                  <p class="text-indigo-600"><%= address.name %></p>
+                  <p><%= address.streetAddress %>, <%= address.city %> <%= address.zip %></p>
+                  <p class="mb-4">Phone : <%= address.phone %></p>
+
+                  <div class="flex pb-6">
+                    <div class="relative w-full">
+                      <label class="flex items-center mb-1.5 text-black text-md font-bold">Payment Method
+                      </label>
+                        <form action='/create-checkout-session' method='post'>
+
+                      <div class="grid space-y-2">
+                        <label for="hs-vertical-radio-in-form" class="max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400">
+                          <input type="radio" value="card" name="payment" required class="shrink-0 mt-0.5 border-gray-200 rounded-full text-indigo-600 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-800 null:border-neutral-700 null:checked:bg-blue-500 null:checked:border-blue-500 null:focus:ring-offset-gray-800" id="hs-vertical-radio-in-form">
+                          <div class="flex items-center ms-3">
+                            <span class="text-sm mr-2 mb-1 text-gray-500 null:text-neutral-400">Credit or Debit card</span>
+
+                            <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="rgba(18,98,236,1)" class="mr-2">
+                              <path d="M22.2215 15.7683L21.9974 14.6431L19.4831 14.6431L19.0837 15.7599L17.0677 15.7643C18.3633 12.6514 19.3247 10.3455 19.952 8.84657C20.1159 8.45511 20.4072 8.25543 20.8364 8.25848C21.1638 8.26094 21.6991 8.26124 22.4421 8.25942L24 15.7648L22.2215 15.7683ZM20.0485 13.1018H21.6692L21.0642 10.2819L20.0485 13.1018ZM7.06069 8.2567L9.08703 8.25933L5.95498 15.7683L3.90367 15.7675C3.21013 13.0896 2.70084 11.1042 2.37581 9.81122C2.27616 9.4148 2.07796 9.13797 1.69702 9.00705C1.35736 8.89031 0.791683 8.7098 0 8.46553V8.25942C1.48023 8.25924 2.55921 8.25924 3.23694 8.25942C3.7974 8.25959 4.12411 8.53015 4.22922 9.08566C4.33473 9.6435 4.60127 11.0616 5.02884 13.3398L7.06069 8.2567ZM11.8702 8.25934L10.2695 15.7676L8.34108 15.7648C8.37914 15.5824 8.91202 13.0797 9.93972 8.2567L11.8702 8.25934ZM15.7815 8.12012C16.3578 8.12012 17.0846 8.2992 17.5035 8.46553L17.1652 10.0221C16.7871 9.87023 16.1657 9.66491 15.6424 9.67294C14.8813 9.68462 14.4117 10.004 14.4117 10.3105C14.4117 10.808 15.2277 11.0586 16.0681 11.603C17.0265 12.2237 17.1531 12.78 17.1412 13.3856C17.1277 14.6413 16.0681 15.8801 13.8322 15.8801C12.8111 15.8648 12.4444 15.7791 11.6122 15.4839L11.9637 13.8595C12.8106 14.2142 13.1698 14.327 13.8935 14.327C14.5569 14.327 15.1263 14.0589 15.1312 13.5919C15.1347 13.2598 14.9316 13.0955 14.1871 12.6847C13.4427 12.2739 12.3994 11.706 12.4128 10.5631C12.43 9.10074 13.815 8.12012 15.7815 8.12012Z"></path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="rgba(234,113,46,1)" class="mr-2">
+                              <path d="M12.001 6.65407C13.5816 7.89878 14.5965 9.82972 14.5965 11.9977C14.5965 14.1657 13.5816 16.0966 12.001 17.3413C10.4204 16.0966 9.40547 14.1657 9.40547 11.9977C9.40547 9.82972 10.4204 7.89878 12.001 6.65407ZM11.1316 6.0717C9.46024 7.50229 8.40098 9.62742 8.40098 12C8.40098 14.371 9.45891 16.4949 11.1285 17.9255C10.1444 18.4795 9.00847 18.7955 7.79873 18.7955C4.04443 18.7955 1.00098 15.752 1.00098 11.9977C1.00098 8.24341 4.04443 5.19995 7.79873 5.19995C9.00976 5.19995 10.1468 5.51663 11.1316 6.0717ZM12.8735 17.9255C14.543 16.4949 15.601 14.371 15.601 12C15.601 9.62742 14.5417 7.50229 12.8703 6.0717C13.8551 5.51663 14.9922 5.19995 16.2032 5.19995C19.9575 5.19995 23.001 8.24341 23.001 11.9977C23.001 15.752 19.9575 18.7955 16.2032 18.7955C14.9935 18.7955 13.8576 18.4795 12.8735 17.9255Z"></path>
+                            </svg>
+                          </div>
+                        </label>
+                        
+                        <label for="hs-vertical-radio-in-form2" class="max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400">
+                          <input type="radio" value="amazon_pay" name="payment" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-indigo-600 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-800 null:border-neutral-700 null:checked:bg-blue-500 null:checked:border-blue-500 null:focus:ring-offset-gray-800" id="hs-vertical-radio-in-form2">
+                          <div class="flex items-center ms-3">
+                            <span class="text-sm mr-2 text-gray-500 null:text-neutral-400">Amazon Pay</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="14" width="17.5" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M14 325.3c2.3-4.2 5.2-4.9 9.7-2.5 10.4 5.6 20.6 11.4 31.2 16.7a595.9 595.9 0 0 0 127.4 46.3 616.6 616.6 0 0 0 63.2 11.8 603.3 603.3 0 0 0 95 5.2c17.4-.4 34.8-1.8 52.1-3.8a603.7 603.7 0 0 0 163.3-42.8c2.9-1.2 5.9-2 9.1-1.2 6.7 1.8 9 9 4.1 13.9a70 70 0 0 1 -9.6 7.4c-30.7 21.1-64.2 36.4-99.6 47.9a473.3 473.3 0 0 1 -75.1 17.6 431 431 0 0 1 -53.2 4.8 21.3 21.3 0 0 0 -2.5 .3H308a21.3 21.3 0 0 0 -2.5-.3c-3.6-.2-7.2-.3-10.7-.4a426.3 426.3 0 0 1 -50.4-5.3A448.4 448.4 0 0 1 164 420a443.3 443.3 0 0 1 -145.6-87c-1.8-1.6-3-3.8-4.4-5.7zM172 65.1l-4.3 .6a80.9 80.9 0 0 0 -38 15.1c-2.4 1.7-4.6 3.5-7.1 5.4a4.3 4.3 0 0 1 -.4-1.4c-.4-2.7-.8-5.5-1.3-8.2-.7-4.6-3-6.6-7.6-6.6h-11.5c-6.9 0-8.2 1.3-8.2 8.2v209.3c0 1 0 2 .1 3 .2 3 2 4.9 4.9 5 7 .1 14.1 .1 21.1 0 2.9 0 4.7-2 5-5 .1-1 .1-2 .1-3v-72.4c1.1 .9 1.7 1.4 2.2 1.9 17.9 14.9 38.5 19.8 61 15.4 20.4-4 34.6-16.5 43.8-34.9 7-13.9 9.9-28.7 10.3-44.1 .5-17.1-1.2-33.9-8.1-49.8-8.5-19.6-22.6-32.5-43.9-36.9-3.2-.7-6.5-1-9.8-1.5-2.8-.1-5.5-.1-8.3-.1zM124.6 107a3.5 3.5 0 0 1 1.7-3.3c13.7-9.5 28.8-14.5 45.6-13.2 14.9 1.1 27.1 8.4 33.5 25.9 3.9 10.7 4.9 21.8 4.9 33 0 10.4-.8 20.6-4 30.6-6.8 21.3-22.4 29.4-42.6 28.5-14-.6-26.2-6-37.4-13.9a3.6 3.6 0 0 1 -1.7-3.3c.1-14.1 0-28.1 0-42.2s.1-28 0-42.1zm205.7-41.9c-1 .1-2 .3-2.9 .4a148 148 0 0 0 -28.9 4.1c-6.1 1.6-12 3.8-17.9 5.8-3.6 1.2-5.4 3.8-5.3 7.7 .1 3.3-.1 6.6 0 9.9 .1 4.8 2.1 6.1 6.8 4.9 7.8-2 15.6-4.2 23.5-5.7 12.3-2.3 24.7-3.3 37.2-1.4 6.5 1 12.6 2.9 16.8 8.4 3.7 4.8 5.1 10.5 5.3 16.4 .3 8.3 .2 16.6 .3 24.9a7.8 7.8 0 0 1 -.2 1.4c-.5-.1-.9 0-1.3-.1a180.6 180.6 0 0 0 -32-4.9c-11.3-.6-22.5 .1-33.3 3.9-12.9 4.5-23.3 12.3-29.4 24.9-4.7 9.8-5.4 20.2-3.9 30.7 2 14 9 24.8 21.4 31.7 11.9 6.6 24.8 7.4 37.9 5.4 15.1-2.3 28.5-8.7 40.3-18.4a7.4 7.4 0 0 1 1.6-1.1c.6 3.8 1.1 7.4 1.8 11 .6 3.1 2.5 5.1 5.4 5.2 5.4 .1 10.9 .1 16.3 0a4.8 4.8 0 0 0 4.8-4.7 26.2 26.2 0 0 0 .1-2.8v-106a80 80 0 0 0 -.9-12.9c-1.9-12.9-7.4-23.5-19-30.4-6.7-4-14.1-6-21.8-7.1-3.6-.5-7.2-.8-10.8-1.3-3.9 .1-7.9 .1-11.9 .1zm35 127.7a3.3 3.3 0 0 1 -1.5 3c-11.2 8.1-23.5 13.5-37.4 14.9-5.7 .6-11.4 .4-16.8-1.8a20.1 20.1 0 0 1 -12.4-13.3 32.9 32.9 0 0 1 -.1-19.4c2.5-8.3 8.4-13 16.4-15.6a61.3 61.3 0 0 1 24.8-2.2c8.4 .7 16.6 2.3 25 3.4 1.6 .2 2.1 1 2.1 2.6-.1 4.8 0 9.5 0 14.3s-.2 9.4-.1 14.1zm259.9 129.4c-1-5-4.8-6.9-9.1-8.3a88.4 88.4 0 0 0 -21-3.9 147.3 147.3 0 0 0 -39.2 1.9c-14.3 2.7-27.9 7.3-40 15.6a13.8 13.8 0 0 0 -3.7 3.5 5.1 5.1 0 0 0 -.5 4c.4 1.5 2.1 1.9 3.6 1.8a16.2 16.2 0 0 0 2.2-.1c7.8-.8 15.5-1.7 23.3-2.5 11.4-1.1 22.9-1.8 34.3-.9a71.6 71.6 0 0 1 14.4 2.7c5.1 1.4 7.4 5.2 7.6 10.4 .4 8-1.4 15.7-3.5 23.3-4.1 15.4-10 30.3-15.8 45.1a17.6 17.6 0 0 0 -1 3c-.5 2.9 1.2 4.8 4.1 4.1a10.6 10.6 0 0 0 4.8-2.5 145.9 145.9 0 0 0 12.7-13.4c12.8-16.4 20.3-35.3 24.7-55.6 .8-3.6 1.4-7.3 2.1-10.9v-17.3zM493.1 199q-19.4-53.6-38.7-107.2c-2-5.7-4.2-11.3-6.3-16.9-1.1-2.9-3.2-4.8-6.4-4.8-7.6-.1-15.2-.2-22.9-.1-2.5 0-3.7 2-3.2 4.5a43.1 43.1 0 0 0 1.9 6.1q29.4 72.8 59.1 145.5c1.7 4.1 2.1 7.6 .2 11.8-3.3 7.3-5.9 15-9.3 22.3-3 6.5-8 11.4-15.2 13.3a42.1 42.1 0 0 1 -15.4 1.1c-2.5-.2-5-.8-7.5-1-3.4-.2-5.1 1.3-5.2 4.8q-.2 5 0 9.9c.1 5.5 2 8 7.4 8.9a108.2 108.2 0 0 0 16.9 2c17.1 .4 30.7-6.5 39.5-21.4a131.6 131.6 0 0 0 9.2-18.4q35.6-89.7 70.6-179.6a26.6 26.6 0 0 0 1.6-5.5c.4-2.8-.9-4.4-3.7-4.4-6.6-.1-13.3 0-19.9 0a7.5 7.5 0 0 0 -7.7 5.2c-.5 1.4-1.1 2.7-1.6 4.1l-34.8 100c-2.5 7.2-5.1 14.5-7.7 22.2-.4-1.1-.6-1.7-.9-2.4z"/></svg>
+                            
+                          </div>
+                        </label>
+                      
+                        <label for="hs-vertical-radio-in-form3" class="max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 null:bg-neutral-900 null:border-neutral-700 null:text-neutral-400">
+                          <input type="radio" value="cod" name="payment" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-indigo-600 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none null:bg-neutral-800 null:border-neutral-700 null:checked:bg-blue-500 null:checked:border-blue-500 null:focus:ring-offset-gray-800" id="hs-vertical-radio-in-form3">
+                          <div class="flex items-center ms-3">
+                            <span class="text-sm mr-2 text-gray-500 null:text-neutral-400">Cash on Delivery</span>
+                            <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                            </svg>
+                            
+                          </div>
+                        </label>
+
+
+                      </div>
+                    </div>  
+                  </div>
+
+                  <div class="flex items-center justify-between py-8">
+                    <p class="font-medium text-xl leading-8 text-black">Total Payable</p>
+                    <% if(total > 49){ %>
+                      <p class="font-semibold text-xl leading-8 text-indigo-600">$<%= total.toLocaleString('en-US') %>.00</p>
+                  <% } else { %>
+                    <p class="font-semibold text-xl leading-8 text-indigo-600">$<%= (total + 9).toLocaleString('en-US') %>.00</p>
+                  <% } %>
+                  </div>
+                  <button type="submit"
+                    class="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">Complete Payment <i class="ri-arrow-right-s-line"></i></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <%- include('partials/footer'); -%>

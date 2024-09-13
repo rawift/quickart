@@ -1,0 +1,25 @@
+<div class="my-5 mx-4 md:mx-16 ">
+
+    <form id="searchForm" class="bg-white rounded-2xl">   
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+        <div class="relative rounded-2xl bg-white">
+
+            <input type="search" autocomplete="off" id="default-search" class="block rounded-xl shadow-md w-full  focus:outline-none p-4 text-sm text-gray-900 border border-gray-300 bg-white" placeholder="Search Apple, Oneplus..." required>
+            <button type="button" onclick="search()" class="text-white absolute end-2.5 bottom-2.5 bg-indigo-600 hover:bg-indigo-700 shadow:bg-indigo-700 font-medium rounded-2xl text-sm px-4 py-2"><svg class="w-3 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg></button>
+        </div>
+    </form>
+    
+    <script>
+    function search() {
+        const searchTerm = document.getElementById('default-search').value.trim();
+        if (searchTerm !== '') {
+            window.location.href = `/search?term=${encodeURIComponent(searchTerm)}`;
+        } else {
+        }
+    }
+    </script>
+    
+
+</div>

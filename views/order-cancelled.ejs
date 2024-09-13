@@ -1,0 +1,121 @@
+<%- include('partials/header'); -%>
+
+
+    <%- include('partials/navbar2'); -%>
+
+
+
+
+        <style>
+            input[type='checkbox']:checked {
+                background-image: url(https://pagedone.io/asset/uploads/1689406942.svg);
+            }
+
+            select {
+                text-indent: 1px;
+                text-overflow: '';
+                width: 50px;
+                height: 50px;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background: transparent url(https://pagedone.io/asset/uploads/1716542745.png) no-repeat 97% center;
+            }
+        </style>
+        <section class="py-8 pb-24 relative">
+            <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
+                <div class="w-full flex-col justify-start items-end lg:gap-16 gap-12 inline-flex">
+                    <div class="w-full flex-col justify-start items-center gap-14 flex">
+                        <div class="w-full flex-col justify-start items-start gap-3 flex">
+                            <h2 class="w-full text-center text-red-600 text-3xl font-bold font-manrope leading-normal">
+                                Order Cancelled!</h2>
+                            <p class="w-full text-center text-gray-500 text-base font-medium leading-relaxed">We have
+                                received your cancellation request and have initiated your refund.</p>
+                        </div>
+                        <div class="w-full flex-col justify-start items-start gap-8 flex">
+                            <div class="w-full flex-col justify-start items-start gap-5 flex">
+                                <h4 class="text-black text-xl font-semibold leading-8">Order Details</h4>
+                                <div
+                                    class="w-full p-8 rounded-xl border border-gray-200 flex-col justify-start items-start gap-8 flex">
+                                    <div class="w-full justify-between items-center gap-4 flex sm:flex-row flex-col">
+                                        <h5 class="text-gray-900 text-lg font-semibold leading-normal">Order Number:
+                                            <span class="text-gray-500 font-medium">#<%= order.orderNumber %></span>
+                                        </h5>
+
+                                        <% const formattedDate=((date)=> new Date(new Date(date).setDate(new Date(date).getDate() +
+                                        0)).toLocaleString('en-US', { timeZone: "Asia/Kolkata", day: '2-digit', month: 'long', year: 'numeric'
+                                        }).replace(/(\d+)(?=\s)/, '$1' + (['th','st','nd','rd'][((n)=>n%100>10&&n%100
+                                        <20?0:[,1,2,3,0,0,0,0,0,0][n%10])(parseInt(RegExp.$1))])) )(order.orderDate); %>
+                                        <h5 class="text-gray-900 text-lg font-semibold leading-normal">Order Date:
+                                            <span class="text-gray-500 font-medium"><%= formattedDate %></span>
+                                        </h5>
+                                    </div>
+                                    <div
+                                        class="w-full justify-between items-center gap-4 flex sm:flex-row flex-col pb-8 border-b border-gray-200">
+                                        <h5 class="text-gray-900 text-lg font-semibold leading-normal">Refund Amount:
+                                            <span class="text-gray-500 font-medium">$<%= order.orderValue %></span>
+                                        </h5>
+                                        <h5 class="text-gray-900 text-lg font-semibold leading-normal">Refund Source:
+                                            <% if(order.paymentMethod==='amazon_pay' ){ %>
+                                                <span class="text-gray-500 font-medium">Amazon Pay</span>
+                                                <% } else if (order.paymentMethod==='cod' ) { %>
+                                                    <span class="text-gray-500 font-medium">Cash on Delivery</span>
+                                                    <% } else { %>
+                                                        <span class="text-gray-500 font-medium">Card</span>
+                                                        <% } %>
+                                        </h5>
+                                    </div>
+                                    <div class="w-full flex-col justify-start items-start gap-6 flex">
+                                        <% order.products.forEach(orderProduct=> { %>
+
+                                            <div class="w-full bg-white border-b border-gray-200 px-3 py-4 mb-6 mt-2">
+                                                <div class="flex items-center space-x-4">
+                                                    <div class="w-20 h-20">
+                                                        <img onerror="this.src='https://placehold.co/300?text=Product image not available&font=pt-sans'"
+                                                         src="<%= orderProduct.product.imageUrl %>"
+                                                            alt="Product-image" class="object-cover" />
+                                                    </div>
+                                                    <div>
+                                                        <h2 class="text-md md:text-xl font-bold productLinkCart">
+                                                            <%= orderProduct.product.name %>
+                                                        </h2>
+                                                        <p class="text-gray-700 text-xs md:text-lg mt-1">
+                                                            <%= orderProduct.product.description %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center justify-between mt-4">
+                                                    <div class="flex items-center">
+                                                        <label for="quantity2"
+                                                            class="block text-sm font-medium text-gray-700">Qty: <%=
+                                                                orderProduct.quantity %></label>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <p class="text-lg md:text-3xl font-semibold">$<%=
+                                                                orderProduct.product.price %>.00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <% }); %>
+
+                                    </div>
+                                </div>
+                                <div class="w-full flex my-5 justify-start">
+                                    <a href="/account/orders">
+                                        <button type="button" class="sm:w-fit w-full px-5 py-2.5 bg-black hover:bg-gray-800 transition-all duration-700 ease-in-out rounded-xl shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)]">
+                                            <span class="text-white text-base font-semibold leading-7">Back to Orders</span>
+                                        </button>  
+                                    </a>                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <%- include('partials/footer'); -%>

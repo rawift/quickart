@@ -1,0 +1,338 @@
+<%- include('partials/header'); -%>
+
+
+  <%- include('partials/navbar2'); -%>
+
+  <% const deliveryDate=((date)=> new Date(new Date(date).setDate(new Date(date).getDate() +
+  3)).toLocaleString('en-US', { day: '2-digit', month: 'long', year: 'numeric'
+  }).replace(/(\d+)(?=\s)/, '$1' + (['th','st','nd','rd'][((n)=>n%100>10&&n%100
+  <20?0:[,1,2,3,0,0,0,0,0,0][n%10])(parseInt(RegExp.$1))])) )(fullOrder.orderDate); %>
+
+<% const orderDate=((date)=> new Date(new Date(date).setDate(new Date(date).getDate())).toLocaleString('en-US', { timeZone: "Asia/Kolkata", day: '2-digit', month: 'long', year: 'numeric'
+}).replace(/(\d+)(?=\s)/, '$1' + (['th','st','nd','rd'][((n)=>n%100>10&&n%100
+<20?0:[,1,2,3,0,0,0,0,0,0][n%10])(parseInt(RegExp.$1))])) )(fullOrder.orderDate); %>
+
+<% const orderTimeIST = new Date(fullOrder.orderDate).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", hour12: false }).split(' ')[1]; %>
+
+<% const updateTimeIST = new Date(fullOrder.updatedAt).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", hour12: false }).split(' ')[1]; %>
+
+    <section class="py-12 mb-24 relative">
+      <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+
+
+
+
+        <!-- Main modal -->
+        <div id="default-modal" tabindex="-1" aria-hidden="true"
+          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow ">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                <h3 class="text-xl font-semibold text-gray-900">
+                  Order Status
+                </h3>
+                <button type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                  data-modal-hide="default-modal">
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>
+              </div>
+              <!-- Modal body -->
+              <div class="p-4 md:p-5 space-y-4">
+                <!-- Timeline -->
+                <div>
+
+
+                  <!-- Item -->
+                  <div class="flex gap-x-3">
+                    <!-- Icon -->
+                    <div
+                      class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 null:after:bg-neutral-700">
+                      <div class="relative z-10 size-7 flex justify-center items-center">
+                        <div class="size-2 rounded-full <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'bg-green-600' : 'bg-gray-400' %>"></div>
+                      </div>
+                    </div>
+                    <!-- End Icon -->
+
+                    <!-- Right Content -->
+                    <div class="grow pt-0.5 pb-8">
+                      <h3 class="flex text-xl gap-x-1.5 font-semibold <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'text-green-600' : 'text-gray-400' %>">
+                        <svg class="shrink-0 size-5 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                          <polyline points="14 2 14 8 20 8"></polyline>
+                          <line x1="16" x2="8" y1="13" y2="13"></line>
+                          <line x1="16" x2="8" y1="17" y2="17"></line>
+                          <line x1="10" x2="8" y1="9" y2="9"></line>
+                        </svg>
+                        <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'Order Confirmed' : 'Pending' %>                      </h3>
+                      <p class="mt-1 text-xs text-gray-600 null:text-neutral-400">
+                        <%= ['Processing','Shipped','Delivered'].includes(fullOrder.status) ? `${orderDate}, ${orderTimeIST}` : `` %>              
+                      </p>
+
+                    </div>
+                    <!-- End Right Content -->
+                  </div>
+                  <!-- End Item -->
+
+                  <!-- Item -->
+                  <div class="flex gap-x-3">
+                    <!-- Icon -->
+                    <div
+                      class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 null:after:bg-neutral-700">
+                      <div class="relative z-10 size-7 flex justify-center items-center">
+                        <div class="size-2 rounded-full <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'bg-green-600' : 'bg-gray-400' %>"></div>
+                      </div>
+                    </div>
+                    <!-- End Icon -->
+
+                    <!-- Right Content -->
+                    <div class="grow pt-0.5 pb-8">
+                      <h3 class="flex text-xl gap-x-1.5 font-semibold <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'text-green-600' : 'text-gray-400' %>">
+                        <svg class="shrink-0 size-5 mt-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <%= ['Processing', 'Shipped', 'Delivered'].includes(fullOrder.status) ? 'Processing' : 'Processing' %>           
+                      </h3>
+                      <p class="mt-1 text-xs text-gray-600 null:text-neutral-400">
+                        <%= ['Processing','Shipped','Delivered'].includes(fullOrder.status) ? `${orderDate}, ${orderTimeIST}` : `` %>              
+                      </p>
+
+                    </div>
+                    <!-- End Right Content -->
+                  </div>
+                  <!-- End Item -->
+
+                  <!-- Item -->
+                  <div class="flex gap-x-3">
+                    <!-- Icon -->
+                    <div
+                      class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 null:after:bg-neutral-700">
+                      <div class="relative z-10 size-7 flex justify-center items-center">
+                        <div class="size-2 rounded-full <%= ['Shipped', 'Delivered'].includes(fullOrder.status) ? 'bg-green-600' : 'bg-gray-400' %>"></div>
+                      </div>
+                    </div>
+                    <!-- End Icon -->
+
+                    <!-- Right Content -->
+                    <div class="grow pt-0.5 pb-8">
+                      <h3 class="flex text-xl gap-x-1.5 font-semibold <%= ['Shipped', 'Delivered'].includes(fullOrder.status) ? 'text-green-600' : 'text-gray-400' %>">
+                        <svg class="shrink-0 size-5 mt-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
+                        </svg>
+                        <%= ['Shipped', 'Delivered'].includes(fullOrder.status) ? 'Shipped' : 'Yet to be shipped' %>                     
+                      </h3>
+                      <p class="mt-1 text-xs text-gray-600 null:text-neutral-400">
+                        <%= ['Shipped','Delivered'].includes(fullOrder.status) ? `${orderDate}, ${updateTimeIST}` : `Expected by ${orderDate}` %>                    
+                      </p>
+                    </div>
+                    <!-- End Right Content -->
+                  </div>
+                  <!-- End Item -->
+
+
+
+                  <!-- Item -->
+                  <div class="flex gap-x-3">
+                    <!-- Icon -->
+                    <div
+                      class="relative last:after:hidden  after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 null:after:bg-neutral-700">
+                      <div class="relative size-7 flex justify-center items-center">
+                        <div class="size-2 rounded-full <%= ['Delivered'].includes(fullOrder.status) ? 'bg-green-600' : 'bg-gray-400' %>"></div>
+                      </div>
+                    </div>
+                    <!-- End Icon -->
+
+                    <!-- Right Content -->
+                    <div class="grow pt-0.5 pb-8">
+                      <h3 class="flex text-xl gap-x-1.5 font-semibold <%= ['Delivered'].includes(fullOrder.status) ? 'text-green-600' : 'text-gray-400' %>">
+                        <svg class="shrink-0 size-5 mt-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <%= ['Delivered'].includes(fullOrder.status) ? 'Delivered' : 'Yet to be delivered' %>                
+                      </h3>
+                      <p class="mt-1 text-xs text-gray-600 null:text-neutral-400">
+                        <%= ['Delivered'].includes(fullOrder.status) ? `${deliveryDate}` : `Expected by ${deliveryDate}` %>              
+                      </p>
+                    </div>
+                    <!-- End Right Content -->
+                  </div>
+                  <!-- End Item -->
+                  <!-- End Item -->
+                </div>
+                <!-- End Timeline -->
+              </div>
+              <!-- Modal footer -->
+              <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                <button data-modal-hide="default-modal" type="button"
+                  class="text-white bg-black hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="space-y-5">
+
+          <!-- Cancelled order alert -->
+          <% if(fullOrder.status==='Cancelled' ) { %>
+            <div class="bg-red-50 border-t-2 border-red-500 rounded-lg p-4" role="alert" tabindex="-1"
+              aria-labelledby="hs-bordered-success-style-label">
+              <div class="flex">
+                <div class="shrink-0">
+                  <!-- Icon -->
+                  <span
+                    class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z">
+                      </path>
+                    </svg>
+                  </span>
+                  <!-- End Icon -->
+                </div>
+                <div class="ms-3">
+                  <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold">
+                    Your order has been cancelled.
+                  </h3>
+                  <p class="text-xs md:text-sm text-gray-700">
+                    We have cancelled your order as per your request and have issued you a refund.
+                  </p>
+                  <p class="text-xs mt-1 md:text-sm text-gray-700 ">
+                    <a class="underline text-blue-500"
+                      href="/track-refund-status?order_no=<%= fullOrder.orderNumber %>">Track Refund Status</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <% } %>
+              <div class="main-box border border-gray-200 rounded-xl pt-6 max-w-xl max-lg:mx-auto lg:max-w-full">
+                <div
+                  class="flex flex-col lg:flex-row lg:items-center justify-between px-6 pb-6 border-b border-gray-200">
+                  <div class="data">
+                    <p class="leading-7 text-black">Order ID: <span class="text-indigo-600 font-medium">#<%=
+                          fullOrder.orderNumber %></span></p>
+
+                        <p class="text-base leading-7 text-black">Estimated Delivery date : <span
+                            class="text-black font-medium">
+                            <%= deliveryDate %>
+                          </span></p>
+                        <p class=" text-base leading-7 text-black">Shipping Address : <span
+                            class="text-black font-medium">
+                            <%= address.name %>, <%= address.streetAddress %>, <%= address.city %>
+                                  <%= address.zip %>
+                          </span></p>
+                  </div>
+                  <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal"
+                    class="text-center mt-3 px-5 py-2 rounded-[100px] bg-indigo-600 flex items-center justify-center text-md text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400"
+                    style="box-sizing: border-box;">
+                    <svg class="w-4 h-4 mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                      width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                        d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                    </svg>
+                    Track order
+                  </button>
+                </div>
+                <div class="w-full px-3 min-[400px]:px-6">
+
+                  <% fullOrder.products.forEach(orderProduct=> { %>
+
+                    <div class="bg-white border-b border-gray-200 px-3 py-4 mb-6 mt-2">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-20 h-20">
+                          <img onerror="this.src='https://placehold.co/400?text=Product image not available&font=pt-sans'" src="<%= orderProduct.product.imageUrl %>" alt="Product-image"
+                            class="object-cover mt-3" />
+                        </div>
+                        <div>
+                          <h2 class="text-md md:text-xl font-bold productLinkCart">
+                            <%= orderProduct.product.name %>
+                          </h2>
+                          <p class="text-gray-700 text-xs md:text-lg mt-1">
+                            <%= orderProduct.product.description %>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between mt-4">
+                        <div class="flex items-center">
+                          <label for="quantity2" class="block text-sm font-medium text-gray-700">Qty: <%=
+                              orderProduct.quantity %></label>
+                        </div>
+                        <div class="text-right">
+                          <p class="text-lg md:text-3xl font-semibold">$<%= orderProduct.product.price %>.00</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <% }); %>
+
+
+                      <div
+                        class="w-full border-t border-gray-200 px-6 flex flex-col lg:flex-row items-center justify-between ">
+                        <div class="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-200">
+                          <% if(fullOrder.status==='Cancelled' ){ %>
+                            <a href="">
+                              <button disabled
+                                class="flex outline-0 py-6 sm:pr-6 sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-red-500 bg-white transition-all duration-500 hover:text-red-500">
+
+                                Order Cancelled
+                              </button>
+                            </a>
+                            <% } else { %>
+                              <a href="/order-cancellation?order_no=<%= fullOrder.orderNumber %>">
+                                <button
+                                  class="flex outline-0 py-6 sm:pr-6 sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-red-500">
+                                  <svg class="stroke-black transition-all duration-500 group-hover:stroke-red-500"
+                                    xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
+                                    fill="none">
+                                    <path d="M5.5 5.5L16.5 16.5M16.5 5.5L5.5 16.5" stroke="" stroke-width="1.6"
+                                      stroke-linecap="round" />
+                                  </svg>
+                                  Cancel Order
+                                </button>
+                              </a>
+                              <% } %>
+
+                                <% if(fullOrder.paymentMethod==='amazon_pay' ){ %>
+                                  <p class="font-medium text-lg inline-flex text-gray-900 pl-6 py-3 max-lg:text-center">
+                                    Paid using Amazon Pay</p>
+                                  <% } else if (fullOrder.paymentMethod==='card' ) { %>
+                                    <p
+                                      class="font-medium text-lg inline-flex text-gray-900 pl-6 py-3 max-lg:text-center">
+                                      Paid using Card</p>
+                                    <% } else if (fullOrder.paymentMethod==='link' ) { %>
+                                      <p
+                                        class="font-medium text-lg flex inline-flex text-gray-900 pl-6 py-3 max-lg:text-center">
+                                        Paid using Link
+                                      </p>
+                                      <% } else { %>
+                                        <p
+                                          class="font-medium text-lg flex inline-flex text-gray-900 pl-6 py-3 max-lg:text-center">
+                                          Cash on Delivery
+                                        </p>
+                                        <% } %>
+                        </div>
+                        <p class="font-semibold text-lg text-black py-6">Order Amount: <span class="text-indigo-600"> $<%= fullOrder.orderValue %>.00</span></p>
+                      </div>
+
+                </div>
+              </div>
+    </section>
+
+
+    <%- include('partials/footer'); -%>

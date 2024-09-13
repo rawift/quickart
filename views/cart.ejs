@@ -1,0 +1,231 @@
+<%- include('partials/header'); -%>
+
+
+    <%- include('partials/navbar2'); -%>
+
+
+        <div class="max-w-6xl mx-auto py-5 mb-24">
+            <h1 class="text-3xl font-semibold mt-2 mb-6 text-black text-center">Your Cart</h1>
+
+
+
+            <div id="addtocartAlertDiv" style="display: none;" class="bg-teal-50 mx-2 md:mx-16 my-3 border-t-2 border-teal-500 rounded-lg p-4" role="alert" tabindex="-1" aria-labelledby="hs-bordered-success-style-label">
+                <div class="flex">
+                  <div class="shrink-0">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M4.00488 16V4H2.00488V2H5.00488C5.55717 2 6.00488 2.44772 6.00488 3V15H18.4433L20.4433 7H8.00488V5H21.7241C22.2764 5 22.7241 5.44772 22.7241 6C22.7241 6.08176 22.7141 6.16322 22.6942 6.24254L20.1942 16.2425C20.083 16.6877 19.683 17 19.2241 17H5.00488C4.4526 17 4.00488 16.5523 4.00488 16ZM6.00488 23C4.90031 23 4.00488 22.1046 4.00488 21C4.00488 19.8954 4.90031 19 6.00488 19C7.10945 19 8.00488 19.8954 8.00488 21C8.00488 22.1046 7.10945 23 6.00488 23ZM18.0049 23C16.9003 23 16.0049 22.1046 16.0049 21C16.0049 19.8954 16.9003 19 18.0049 19C19.1095 19 20.0049 19.8954 20.0049 21C20.0049 22.1046 19.1095 23 18.0049 23Z"></path></svg>                      </div>
+                  <div class="ms-3">
+                    <h3 id="hs-bordered-success-style-label" class="text-gray-800 mt-1">
+                      Product has been removed from the cart.
+                    </h3>
+
+                  </div>
+                </div>
+              </div>
+
+
+            <div class="shadow-xl pt-12 md:pt-16 p-3 rounded-2xl border border-zinc-200 pb-12 mx-2 md:p-16">
+                <% if(cartData.items.length > 0){ %>
+
+                    <%  cartData.items.forEach(item => { %>
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6 mb-6">
+                            <div class="flex items-center space-x-4">
+        
+                                <div class="w-16 h-16">
+                                    <img onerror="this.src='https://placehold.co/400?text=Product image not available&font=pt-sans'" src="<%= item.product.imageUrl  %>"
+                                        alt="Product" class="object-cover" />
+                                </div>
+                                
+                                <div>
+                                    <h2 class="text-md md:text-base font-bold productLinkCart"><a href="/product?product_id=<%= item.product._id  %>"><%= item.product.name  %></a></h2>
+                                    <p class="text-gray-700 text-xs mt-1"><%= item.product.description  %></p>
+                                
+                                </div>
+                                
+                            </div>
+                            <div class="flex items-center justify-between mt-4">
+                                <div class="flex items-center">
+                                    <label for="quantity2" class="block text-sm font-medium text-gray-700">Qty: </label>
+                                    <div class="flex items-center ml-4">
+                                        <form action="/decrease-quantity" method="post">
+                                            <input name="productID" value="<%= item.product._id %>" type="hidden">
+                                            <button class="text-sm bg-gray-200 rounded-l-md px-2">-</button>
+                                        </form>
+                                        <input readonly type="text" id="quantity2" name="quantity2"
+                                            class="mx-2 text-center w-12 h-5 p-3 md:w-16 border border-gray-300" value="<%= item.quantity  %>">
+                                            <form action="/increase-quantity" method="post">
+                                                <input name="productID" value="<%= item.product._id %>" type="hidden">
+                                                <button class="text-sm bg-green-400 rounded-r-md px-2">+</button>
+                                            </form>
+                                        
+                                    </div>
+                                    <div class="ml-3">
+                                        <form action="/remove-from-cart" method="post">
+                                            <input name="productID" value="<%= item.product._id %>" type="hidden">
+                                            <button onclick="submitForm(this)" class="rounded-full group flex items-center justify-center focus-within:outline-red-500">
+                                                <svg width="34" height="34" viewBox="0 0 34 34" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle class="fill-red-50 transition-all duration-500 group-hover:fill-red-400"
+                                                        cx="17" cy="17" r="17" fill="" />
+                                                    <path class="stroke-red-500 transition-all duration-500 group-hover:stroke-white"
+                                                        d="M14.1673 13.5997V12.5923C14.1673 11.8968 14.7311 11.333 15.4266 11.333H18.5747C19.2702 11.333 19.834 11.8968 19.834 12.5923V13.5997M19.834 13.5997C19.834 13.5997 14.6534 13.5997 11.334 13.5997C6.90804 13.5998 27.0933 13.5998 22.6673 13.5997C21.5608 13.5997 19.834 13.5997 19.834 13.5997ZM12.4673 13.5997H21.534V18.8886C21.534 20.6695 21.534 21.5599 20.9807 22.1131C20.4275 22.6664 19.5371 22.6664 17.7562 22.6664H16.2451C14.4642 22.6664 13.5738 22.6664 13.0206 22.1131C12.4673 21.5599 12.4673 20.6695 12.4673 18.8886V13.5997Z"
+                                                        stroke="#EF4444" stroke-width="1.6" stroke-linecap="round" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+        
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-lg md:text-2xl font-semibold">$<%= (item.product.price).toLocaleString("en-US") %></p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    <% }); %>
+                    
+    
+                    <!-- Payment Offers -->
+                    <div class="bg-white rounded-xl p-1 mb-6">
+                        <button class="border rounded-lg w-full bg-black text-white p-3 mb-4" onclick="toggleOffers()">
+                            <h2 class="text-lg text-left font-bold flex items-center">
+                                <svg fill="white" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                    <path
+                                        d="M345 39.1L472.8 168.4c52.4 53 52.4 138.2 0 191.2L360.8 472.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4 0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5 0 90.5L277.3 442.7c-25 25-65.5 25-90.5 0l-168-168C6.7 262.7 0 246.5 0 229.5zM144 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+                                </svg>
+                                <span class="mx-3">Payment Offers</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </h2>
+                        </button>
+    
+                        <div id="paymentOffers" style="display: none;">
+                            <div class="alert bg-zinc-100 shadow-2xl mb-3">
+                                <span class="text-xs md:text-sm" style="display: flex; align-items: center;">
+                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#B197FC" d="M492.4 220.8c-8.9 0-18.7 6.7-18.7 22.7h36.7c0-16-9.3-22.7-18-22.7zM375 223.4c-8.2 0-13.3 2.9-17 7l.2 52.8c3.5 3.7 8.5 6.7 16.8 6.7 13.1 0 21.9-14.3 21.9-33.4 0-18.6-9-33.2-21.9-33.1zM528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM122.2 281.1c0 25.6-20.3 40.1-49.9 40.3-12.2 0-25.6-2.4-38.8-8.1v-33.9c12 6.4 27.1 11.3 38.9 11.3 7.9 0 13.6-2.1 13.6-8.7 0-17-54-10.6-54-49.9 0-25.2 19.2-40.2 48-40.2 11.8 0 23.5 1.8 35.3 6.5v33.4c-10.8-5.8-24.5-9.1-35.3-9.1-7.5 0-12.1 2.2-12.1 7.7 0 16 54.3 8.4 54.3 50.7zm68.8-56.6h-27V275c0 20.9 22.5 14.4 27 12.6v28.9c-4.7 2.6-13.3 4.7-24.9 4.7-21.1 0-36.9-15.5-36.9-36.5l.2-113.9 34.7-7.4v30.8H191zm74 2.4c-4.5-1.5-18.7-3.6-27.1 7.4v84.4h-35.5V194.2h30.7l2.2 10.5c8.3-15.3 24.9-12.2 29.6-10.5h.1zm44.1 91.8h-35.7V194.2h35.7zm0-142.9l-35.7 7.6v-28.9l35.7-7.6zm74.1 145.5c-12.4 0-20-5.3-25.1-9l-.1 40.2-35.5 7.5V194.2h31.3l1.8 8.8c4.9-4.5 13.9-11.1 27.8-11.1 24.9 0 48.4 22.5 48.4 63.8 0 45.1-23.2 65.5-48.6 65.6zm160.4-51.5h-69.5c1.6 16.6 13.8 21.5 27.6 21.5 14.1 0 25.2-3 34.9-7.9V312c-9.7 5.3-22.4 9.2-39.4 9.2-34.6 0-58.8-21.7-58.8-64.5 0-36.2 20.5-64.9 54.3-64.9 33.7 0 51.3 28.7 51.3 65.1 0 3.5-.3 10.9-.4 12.9z"/></svg>
+                                    10% instant discount for new customers only. Use Code NEW10.<a
+                                        style="color: rgb(0, 0, 0); text-decoration: underline; margin-left: 5px;"
+                                        href="#">View T&C</a>
+                                </span>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                        <div class="flex justify-between">
+                            <p class="text-gray-700">Subtotal</p>
+                            <p class="text-gray-700">$<%= cartTotal.toLocaleString('en-IN') %></p>
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <p class="text-gray-700">Shipping Fee</p>
+                            <% if(cartTotal > 49){ %>
+                                <p class="text-gray-700"><span style="text-decoration: line-through;">$9</span> <span style="color: rgb(62, 193, 62);">FREE</span></p>
+                            <% } else { %>
+                                <p class="text-gray-700">+$9</p>
+                            <% } %>
+                        </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <p style="font-size: 10px;" class="text-gray-700 flex items-center">
+                                <svg class="w-[12px] h-[12px] text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" style="margin-right: 5px;">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                Free Shipping on orders above $49
+                            </p>
+                        </div>
+                        
+                        
+                        <hr class="my-2">
+                        <div class="flex justify-between mt-2">
+                            <p class="text-xl font-bold">Total</p>
+                            <% if(cartTotal > 49){ %>
+                                <p class="text-xl font-bold">$<%= cartTotal.toLocaleString('en-US') %></p>
+                            <% } else { %>
+                                <p class="text-xl font-bold">$<%= (cartTotal + 9).toLocaleString('en-US') %></p>
+                            <% } %>
+                        </div>
+                        <div class="flex justify-center md:justify-end mt-6">
+                            <a href="/select-address">
+                                <button
+                                class="text-center w-full px-5 py-2 rounded-[100px] bg-indigo-600 flex items-center justify-center text-md text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                Select Address
+                                <svg class="w-5 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path></svg>
+                            </button>
+                            </a>
+                        </div>
+                <% } else { %>
+                    <div class="flex justify-center mt-5 style="display: block;">
+                        <img width="150" src="../assets/images/empty-cart.png" alt="empty-cart">
+                    </div>
+                    <div class="flex justify-center">
+                        <h1 class="text-2xl m-5">Your Cart is Empty :)</h1>
+                    </div>
+                <% } %>
+                
+
+                
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            function toggleOffers() {
+                var x = document.getElementById("paymentOffers");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const addedToCart = urlParams.get('removedfromcart');
+
+        if (addedToCart === 'true') {
+            showAddToCartAlert();
+        }
+    });
+
+    function showAddToCartAlert() {
+        const alertDiv = document.getElementById('addtocartAlertDiv');
+        alertDiv.style.display = 'block';
+
+        setTimeout(() => {
+            // Add a class to initiate a smooth fade-out animation
+            alertDiv.classList.add('fade-out');
+
+            // Hide the alert after the animation completes
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+                // Remove the fade-out class for future displays
+                alertDiv.classList.remove('fade-out');
+            }, 500); // Adjust this time based on your CSS animation duration
+        }, 3000); // Display the alert for 3 seconds
+    }
+
+</script>
+
+
+        
+
+<script>
+    function submitForm(element) {
+        // Find the closest form element to the clicked element
+        var form = element.closest('form');
+
+        // Check if a form was found
+        if (form) {
+            form.submit();
+        }
+    }
+</script>
+
+        <%- include('partials/footer'); -%>

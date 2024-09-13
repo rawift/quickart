@@ -1,0 +1,20 @@
+
+
+<%- include('partials/header'); -%>
+
+
+    <%- include('partials/navbar2'); -%>
+
+<div class="m-4 my-24 p-6 md:mx-64 card border-2 border-gray-200 rounded-xl text-center">
+    <svg fill="#d91717" xmlns="http://www.w3.org/2000/svg" height="6em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+    <h1 class="text-2xl font-bold text-red-500 my-4">Payment Failed!</h1>
+    <p class="text-gray-700">Oops! Looks like there was an issue processing your payment. Please try again.</p>
+    <div class="my-5">
+        <a href="/cart">
+            <button 
+            class="w-48 text-center bg-indigo-600 rounded-xl py-2 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">Retry</button>        </a>
+    </div>
+</div>
+
+
+<%- include('partials/footer'); -%>

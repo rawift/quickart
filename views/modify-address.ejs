@@ -1,0 +1,51 @@
+
+<%- include('partials/header'); -%>
+
+    <%- include('partials/navbar2'); -%>
+
+<div>
+    <div class="mt-6 mb-12 mx-4 md:mx-36">
+        <h2 class="my-7 ml-2 text-2xl font-semibold text-center">Modify Address</h2>
+
+        <div id="new-address" class="mt-4">
+            <div class="card shadow-2xl p-8">
+                <form action="/account/update-address" method="POST">
+                    <input type="hidden" name="addressID" required value="<%= address._id %>">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" minlength="5" maxlength="30" name="name" required value="<%= address.name %>" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    </div>
+                    <div class="mb-4">
+                        <label for="address" class="block text-sm font-medium text-gray-700">Street Address</label>
+                        <input type="text" minlength="5" maxlength="65" name="streetAddress" required value="<%= address.streetAddress %>" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    </div>
+                    <div class="mb-4">
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" minlength="10" maxlength="10" name="phone" required value="<%= address.phone %>" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                            <input type="text" minlength="3" name="city" required value="<%= address.city %>" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                        </div>
+                        <div>
+                            <label for="zip" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                            <input type="zip" minlength="6" maxlength="6" name="zip" required value="<%= address.zip %>" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-sm btn-success mt-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-check-fill" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                            <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                          </svg>
+                        Update Address</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer'); -%>

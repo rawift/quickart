@@ -1,0 +1,66 @@
+<%- include('partials/header'); -%>
+
+
+  <%- include('partials/navbar'); -%>
+
+    <%- include('partials/searchBar'); -%>
+
+
+
+      <div class="maint">
+
+
+
+        <div class="mt-8">
+            <h2 class="text-center text-base md:text-xl">Found <%= fpa.length %> results for "<%= term %>"</h2>
+        </div>
+
+          <div class="p-4 mb-12">
+            <% if(fpa.length === 0){ %>
+                <div class="flex items-center justify-center mb-24">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <img width="400" src="../assets/images/npf.png" alt="no-product-found">
+                        <h1 class="text-xl my-3">No products found!</h1>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-24 mt-5">
+                    <% fpa.forEach((element)=> { %>
+                      <div class="flex mb-5 justify-center">
+                        <div class="card card-compact w-96 bg-base-100 border border-zinc-200 hover:border-zinc-300">
+                          <figure>
+                            <img class="object-cover rounded-xl m-4 p-4 h-60 w-full"  onerror="this.src='https://placehold.co/400?text=Product image not available&font=pt-sans'"
+                            src="<%= element.imageUrl %>" alt="product-image" />
+                          </figure>
+                          <div class="card-body">
+                            <h2 class="card-title font-bold">
+                              <%= element.name %>
+                            </h2>
+                            <p>
+                              <%= element.description %>
+                            </p>
+                            <div class="card-actions justify-between mt-2">
+                              <div class="flex">
+                                <span class="text-2xl font-bold">$<%= (element.price).toLocaleString('en-US') %></span>
+                              </div>
+                              <a href="/product?product_id=<%= element._id %>">
+                                <button class="btn bg-lime-400 hover:bg-lime-500 rounded-xl btn-sm">Buy Now</button>
+                              </a>
+                            </div>
+      
+                          </div>
+                        </div>
+                      </div>
+                      <% }); %>
+                  </div>
+            <% }  %>   
+            
+          </div>
+
+
+          <%- include('partials/footer'); -%>
+
+
+            </body>
+
+            </html>

@@ -1,0 +1,134 @@
+<%- include('partials/header'); -%>
+
+    <%- include('partials/navbar2'); -%>
+
+        <div class="p-3 fontDM mx-5 mb-32 md:p-12">
+            <h2 class="my-4 text-xl font-semibold">Saved Addresses</h2>
+
+            <% if(address.length===0) { %>
+                <h2 class="my-3 text-xl">No saved address found!</h2>
+                <% } else { %>
+                        <% address.forEach((add)=> { %>
+                            <div class="border border-gray-200 rounded-2xl p-4 shadow-lg mb-4">
+
+                                <div style="float: right;">
+                                    <div class="flex">
+                                        <div class="mr-4">
+                                            <form action="/account/modify-address" method="post">
+                                                <input name="addressID" value="<%= add._id %>" type="hidden">
+                                                <p style="cursor: pointer;" onclick="submitForm(this)">
+                                                    
+                                                    <svg class="w-[25px] h-[25px] text-amber-400" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                        viewBox="0 0 20 18">
+                                                        <path
+                                                            d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z" />
+                                                        <path
+                                                            d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
+                                                    </svg>
+                                                </p>
+                                            </form>
+
+                                        </div>
+                                        <form action="/account/delete-address" method="post">
+                                            <input name="addressID" value="<%= add._id %>" type="hidden">
+                                            <p style="cursor: pointer;" onclick="submitForm(this)">
+                                                <svg class="w-[25px] h-[25px] text-red-500" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 18 20">
+                                                    <path
+                                                        d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
+                                                </svg>
+                                            </p>
+                                        </form>
+                                        <div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <p class="text-lg font-semibold">
+                                    <%= add.name %>
+                                </p>
+                                <p>
+                                    <%= add.streetAddress %>
+                                </p>
+                                <p>
+                                    <%= add.city %>, <%= add.zip %>
+                                </p>
+                                <p>Phone : <%= add.phone %>
+                                </p>
+                            </div>
+                            <% }) %>
+                    <% } %>
+
+                    <div class="mt-6">
+                        <button class="btn btn-sm btn-neutral text-white" onclick="toggleNewAddress()"> 
+                            <svg class="w-[18px] h-[18px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.546.5a9.5 9.5 0 1 0 9.5 9.5 9.51 9.51 0 0 0-9.5-9.5ZM13.788 11h-3.242v3.242a1 1 0 1 1-2 0V11H5.304a1 1 0 0 1 0-2h3.242V5.758a1 1 0 0 1 2 0V9h3.242a1 1 0 1 1 0 2Z"/>
+                              </svg>
+                            Add New Address</button>
+                        <div id="new-address" class="mt-4" style="display: none;">
+                            <div class="card border border-gray-200 shadow-2xl p-8">
+                                <h2 class="text-lg font-bold mb-5">Add New Address</h2>
+            
+                                <form action="/add-address?r_url=profileAddress" method="POST">
+                                    <div class="mb-4">
+                                        <label for="name" class="block text-sm font-medium text-black">Full Name</label>
+                                        <input type="text" name="name" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="address" class="block text-sm font-medium text-black">Street Address</label>
+                                        <input type="text" name="streetAddress" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="phone" class="block text-sm font-medium text-black">Phone Number</label>
+                                        <input type="tel" name="phone" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="city" class="block text-sm font-medium text-black">City</label>
+                                            <input type="text" name="city" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                        </div>
+                                        <div>
+                                            <label for="zip" class="block text-sm font-medium text-black">Zip Code</label>
+                                            <input type="zip" name="zip" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn btn-sm btn-success mt-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-check-fill" viewBox="0 0 16 16">
+                                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                                            <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                          </svg>
+                                        Save Address</button>
+                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        <script>
+            function toggleNewAddress() {
+        var x = document.getElementById("new-address");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function submitForm(element) {
+                // Traverse up the DOM to find the parent form element
+                const form = element.closest('form');
+        
+                if (form) {
+                    // Submit the form
+                    form.submit();
+                }
+            }
+        </script>
+
+        <%- include('partials/footer'); -%>
